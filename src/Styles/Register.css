@@ -1,0 +1,140 @@
+.body{
+    flex-grow: 1;
+  }
+  .Right{
+    background: linear-gradient(216.6deg, #09093B 1.53%, rgba(255, 255, 255, 0) 81.18%), #166CFF;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    height: 100vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .Left{
+    background:white;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .Logo{
+    margin-top: 20px;
+    margin-left: 20px;
+    height: 20%;
+    width: 20%;
+  }
+  .Picture{
+  height: 45%;
+  width: 45%;
+  
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  
+  .text1{
+  
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: left;
+  
+  color: #FFFFFF;
+  }
+  .text2{
+    font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+  
+  color: #FFFFFF;
+  }
+  .box{
+    margin: auto;
+    width: 80%;
+  }
+  
+  .loginTitle{
+    font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  }
+  
+  .leftBody{
+  margin-left: 7%;
+  margin-right: 7%;
+  }
+  
+  .inputGroup{
+    margin-top: 5%;
+  }
+  
+  .input{
+    width: 100%;
+  }
+  
+  .Link{
+    float: right;
+  }
+  
+  .button{
+    width: 100%;
+  }
+  
+  
+  @media only screen and (max-width: 900px) {
+    .text1{
+  
+      font-family: Arial, Helvetica, sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+      text-align: left;
+      
+      color: #FFFFFF;
+      }
+      .text2{
+        font-family: Arial, Helvetica, sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 13px;
+      text-align: left;
+      
+      color: #FFFFFF;
+      }
+  }
+  
+  @media only screen and (max-width: 600px) {
+    .Right{
+      border-radius: 20px;
+      height: 100vh;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    .Left{
+      background:white;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+  
+    .text1{
+  
+      font-family: Arial, Helvetica, sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 20px;
+      text-align: left;
+      
+      color: #FFFFFF;
+      }
+      .text2{
+        font-family: Arial, Helvetica, sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      text-align: left;
+      
+      color: #FFFFFF;
+      }
+  }
+  
+  

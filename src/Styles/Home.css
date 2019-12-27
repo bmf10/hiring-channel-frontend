@@ -1,0 +1,258 @@
+.container{
+    display: flexbox;
+    margin-bottom: 50px;
+}
+
+.navbar{
+    display: flex;
+    margin-bottom: 100px;
+}
+.body{
+    display: flex;
+}
+
+.toolbar{
+    background-color: white;
+    display: flexbox;
+}
+.logo{
+    display: flex;
+}
+.searchtypo{
+    margin-top: 30%;
+    position: relative;
+    margin-left: 50px;
+    display: flex;
+}
+.search{
+    position: relative;
+    border-radius: 7px;
+    background-color: #dedede;
+    margin-top: 10px;
+    margin-right: 8px;
+    margin-left: 8px;
+    width: 100%;
+}
+
+.search:hover{
+    background-color: #cecece;
+}
+
+.searchIcon{
+    margin-left: 3px;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputSearch{
+    margin-left: 30px;
+    position: unset;
+    width: 500px;
+    display: flexbox;
+}
+
+.inputSearch .input{
+width: 100%;
+}
+
+.linknav{
+    display: flex;
+}
+
+.linknav .link{
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    height: 100%;
+}
+/* 
+.card{
+    display: flexbox;
+    background-color: blue;
+    max-width: 345px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+} */
+
+.cardmedia{
+    height: 140px;
+}
+
+.floatButton{
+    position: absolute;
+    margin: 100px;
+}
+
+.middle{
+    margin-bottom: 20px;
+    display: flexbox;
+}
+
+.inputsearch{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.paper{
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+}
+
+/* .card {
+    overflow: hidden;
+  }
+  
+  .card .card-img-overlay {
+    padding: 0;
+  }
+  
+  .cards {
+    width: 14rem;
+    border: 1px solid white;
+    height: 400px;
+    margin: 0px;
+    position: relative;
+  }
+  
+  .cards,
+  img,
+  .text-inside,
+  .black-box {
+    border-radius: 10px;
+  }
+  
+  .cards img {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .text-inside {
+    position: absolute;
+    margin-top: 73%;
+    width: 100%;
+    height: 50%;
+    color: white;
+    font-weight: 800;
+  }
+  
+  .cards .black-box {
+    position: absolute;
+    margin-top: 90%;
+    width: 100%;
+    height: 50%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: black;
+    opacity: 0.7;
+  }
+  
+  .cards .text-inside {
+    padding: 40px 6px 4px 13px;
+  }
+  .cards .text-inside p {
+    margin-bottom: 0;
+  }
+  .cards .text-inside .name {
+    font-weight: 900;
+    font-size: 25px;
+  }
+  
+  .cards .text-inside span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 10px;
+  }
+  
+  .card-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100vw;
+    flex-wrap: wrap;
+    overflow: hidden;
+  } */
+
+  .card {
+    display: grid;
+    grid-template-columns: 250px;
+    grid-template-rows: 200px 200px 80px;
+    grid-template-areas: "image" "text" "stats";
+    border-radius: 18px;
+    background: white;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+    font-family: roboto;
+    text-align: center;
+  }
+
+  .card-image {
+    grid-area: image;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  .card-img{
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    width: 100%;
+    height: 100%;
+    background-position: cover;
+  }
+
+  .card-text {
+    grid-area: text;
+    margin: 20px;
+  }
+  .card-text .date {
+    color: rgb(255, 7, 110);
+    font-size:13px;
+  }
+  .card-text p {
+    color: grey;
+    font-size:15px;
+    font-weight: 300;
+  }
+  .card-text h2 {
+    margin-top:0px;
+    font-size:28px;
+  }
+
+  .card-stats {
+    grid-area: stats; 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background: #0099FF;;
+  }
+
+  .card-stats .stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    padding:10px;
+  }
+
+  .card:hover {
+    transform: scale(1.15);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+  }
+  .card {
+    transition: 0.5s ease;
+    cursor: pointer;
+    margin:30px;
+  }
