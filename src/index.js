@@ -8,6 +8,7 @@ import Login from './Components/Login';
 import Home from './Components/Home';
 import RegisterCompany from './Components/RegisterCompany';
 import RegisterEngineer from './Components/RegisterEngineer';
+import EngineerHome from './Components/EngineerHome'
 
 const AppWithRoute=()=>{
     return(
@@ -15,6 +16,7 @@ const AppWithRoute=()=>{
             <Route path="/login" exact component={Login} />
             <Route path="/register/company" exact component={RegisterCompany}/>
             <Route path="/register/engineer" exact component={RegisterEngineer}/>
+            <Route path="/engineer/" exact component={EngineerHome}/>
             <Route path="/" exact component={Home} />
         </Router>
     )

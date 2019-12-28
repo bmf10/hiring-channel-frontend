@@ -32,8 +32,6 @@ import logo from './logo2.svg';
 import Axios from 'axios';
 import photo from './DefaultPicture.png'
 import styles from '../Styles/pagination.module.css'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faStar, faArrowAltCircleDown} from '@fortawesome/free-solid-svg-icons'
 import jwtdecode from "jwt-decode";
 
 class Home extends Component {
@@ -53,7 +51,6 @@ class Home extends Component {
       current_page: '',
       limit: ''
     }
-    console.log(styles);
   }
 
   logout = () => {
@@ -127,8 +124,16 @@ class Home extends Component {
     this.handleSearch();
   }
 
+  profileLink= () =>{
+    if(this.state.decode.login_as != 'company'){
+      this.props.history.push('/engineer')
+    }
+  }
+
   render() {
     const {user} = this.state;
+
+    console.log(user);
 
     let renderPageNumbers;
 
@@ -187,10 +192,10 @@ class Home extends Component {
                   </div>
                 </Typography>
                 <Typography className="linknav">
-                  <Button className="link" href="#text-buttons"><HomeIcon style={{
+                  <Button className="link"><HomeIcon style={{
         color: "#bdbdbd"
       }}/>&nbsp;Home</Button>
-                  <Button className="link" href="#text-buttons">
+                  <Button className="link" onClick={this.profileLink}>
                     <Avatar
                       style={{
                       height: "20px",
@@ -342,17 +347,6 @@ class Home extends Component {
                       </div>
                     </div>
                   </div>
-                // <Grid item sm={3} key={index}>   <div className="cards">     <div
-                // className="black-box"></div>     <div className="text-inside">       <p
-                // className="name">{name}</p>       <p>{description}</p>       <span
-                // className="mb-3">         <FontAwesomeIcon           style={{ color:
-                // "#34abeb"         }}           icon={faArrowAltCircleDown}/> <p
-                // className="ml-1">{total_project}           Projects</p> <FontAwesomeIcon
-                //      className="ml-3"           style={{ color: "yellow"         }}
-                // icon={faStar}/>         <p className="ml-1">{success_rate == null ? '0' :
-                // success_rate}% Success Rate</p>       </span>       <div className="skills">
-                //        <p>Skills:</p>        <p className="overflow-test">{skill_list}</p>
-                //    </div>     </div>    <img src={photo}/>   </div> </Grid>
                 );
               })
               : <h3>Data Not Found</h3>
