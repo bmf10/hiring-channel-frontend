@@ -127,6 +127,8 @@ class Home extends Component {
   profileLink= () =>{
     if(this.state.decode.login_as != 'company'){
       this.props.history.push('/engineer')
+    }else if (this.state.decode.login_as == 'company'){
+      this.props.history.push('/company')
     }
   }
 

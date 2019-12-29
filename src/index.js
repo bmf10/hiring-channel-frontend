@@ -9,6 +9,7 @@ import Home from './Components/Home';
 import RegisterCompany from './Components/RegisterCompany';
 import RegisterEngineer from './Components/RegisterEngineer';
 import EngineerHome from './Components/EngineerHome'
+import CompanyHome from './Components/CompanyHome';
 
 const AppWithRoute=()=>{
     return(
@@ -17,6 +18,7 @@ const AppWithRoute=()=>{
             <Route path="/register/company" exact component={RegisterCompany}/>
             <Route path="/register/engineer" exact component={RegisterEngineer}/>
             <Route path="/engineer/" exact component={EngineerHome}/>
+            <Route path="/company/" exact component={CompanyHome}/>
             <Route path="/" exact component={Home} />
         </Router>
     )
