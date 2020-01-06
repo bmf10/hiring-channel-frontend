@@ -7,6 +7,8 @@ import Axios from 'axios';
 import Swal from 'sweetalert2';
 import HomeIcon from '@material-ui/icons/Home';
 import jwtdecode from "jwt-decode";
+import { LoginUser } from "../Redux/Actions/auth";
+import {connect} from "react-redux";
 
 class Login extends Component {
   constructor(props) {
@@ -55,34 +57,34 @@ class Login extends Component {
       .push('/');
   }
 
-  handleLogin = e => {
+  handleLogin = async(e) => {
     e.preventDefault();
-    Axios
-      .post('http://localhost:8000/auth', {
+
+    let data = {
       username: this.state.email,
       password: this.state.password
-    })
-      .then(response => {
-        let msg = response.data.msg
+    }
 
-        if (msg === "error") {
-          Swal.fire({title: "Failed", text: response.data.errors, icon: "error", timer: 1000, showConfirmButton: false});
-        } else if (msg === "success") {
-          Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
+    await this
+        .props
+        .dispatch(LoginUser(data));
+      const loginUser = await this.props.loginUser;
+      let msg = loginUser.LoginUserData.msg
 
-          localStorage.setItem('token', response.data.data.token);
+      if (msg === "error") {
+        Swal.fire({title: "Failed", text: loginUser.LoginUserData.errors, icon: "error", timer: 1000, showConfirmButton: false});
+      } else if (msg === "success") {
+        Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
 
-          setTimeout(function () {
-            this
-              .props
-              .history
-              .push('/')
-          }.bind(this), 1000);
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      })
+        localStorage.setItem('token', loginUser.LoginUserData.data.token);
+
+        setTimeout(function () {
+          this
+            .props
+            .history
+            .push('/')
+        }.bind(this), 1000);
+      }
   }
 
   componentWillMount() {
@@ -163,4 +165,10 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state =>{
+  return {
+    loginUser: state.loginUser
+  }
+}
+
+export default connect(mapStateToProps)(Login);

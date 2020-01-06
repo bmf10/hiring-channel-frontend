@@ -11,6 +11,9 @@ import RegisterEngineer from './Components/RegisterEngineer';
 import EngineerHome from './Components/EngineerHome'
 import CompanyHome from './Components/CompanyHome';
 
+import { Provider } from "react-redux";
+import store from "./Redux/store";
+
 const AppWithRoute=()=>{
     return(
         <Router>
@@ -24,7 +27,15 @@ const AppWithRoute=()=>{
     )
 }
 
-ReactDOM.render(<AppWithRoute/>, document.getElementById('root'));
+const AppUsingRedux = () =>{
+    return(
+        <Provider store={store}>
+            <AppWithRoute/>
+        </Provider>
+    )
+}
+
+ReactDOM.render(<AppUsingRedux/>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

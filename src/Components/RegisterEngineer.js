@@ -7,7 +7,8 @@ import Axios from 'axios';
 import Swal from 'sweetalert2';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import jwtdecode from "jwt-decode";
-
+import { RegisterEngineerAction } from "../Redux/Actions/auth";
+import {connect} from "react-redux";
 
 class RegisterEngineer extends Component {
   constructor(props) {
@@ -24,32 +25,60 @@ class RegisterEngineer extends Component {
     }
   }
 
-  handleRegister = e => {
+  handleRegister = async(e) => {
     e.preventDefault();
-    Axios
-      .post('http://localhost:8000/auth/engineer', {
+
+    let data = {
       name: this.state.engineer_name,
       date_of_birth: this.state.date_of_birth,
       location: this.state.location,
       description: this.state.description,
       username: this.state.username,
       password: this.state.password
-    })
-      .then(response => {
-        let msg = response.data.msg
+    }
 
-        if (msg === "error") {
-          Swal.fire({title: "Failed", text: response.data.errors, icon: "error", timer: 1000, showConfirmButton: false});
-        } else if (msg === "success") {
-          Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
-          setTimeout(function () {
-            this.redirectLogin();
-          }.bind(this), 1000);
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    await this
+      .props
+      .dispatch(RegisterEngineerAction(data));
+    const registerEngineer = await this.props.registerEngineer;
+    let msg = registerEngineer.RegisterEngineerData.msg
+
+    if (msg === "error") {
+      Swal.fire({title: "Failed", text: registerEngineer.RegisterEngineerData.errors, icon: "error", timer: 1000, showConfirmButton: false});
+    } else if (msg === "success") {
+      Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
+      setTimeout(function () {
+        this
+          .props
+          .history
+          .push('/login/')
+      }.bind(this), 1000);
+    }
+
+    // Axios
+    //   .post('http://localhost:8000/auth/engineer', {
+    //   name: this.state.engineer_name,
+    //   date_of_birth: this.state.date_of_birth,
+    //   location: this.state.location,
+    //   description: this.state.description,
+    //   username: this.state.username,
+    //   password: this.state.password
+    // })
+    //   .then(response => {
+    //     let msg = response.data.msg
+
+    //     if (msg === "error") {
+    //       Swal.fire({title: "Failed", text: response.data.errors, icon: "error", timer: 1000, showConfirmButton: false});
+    //     } else if (msg === "success") {
+    //       Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
+    //       setTimeout(function () {
+    //         this.redirectLogin();
+    //       }.bind(this), 1000);
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
 
   redirectLogin = () => {
@@ -186,4 +215,10 @@ class RegisterEngineer extends Component {
   }
 }
 
-export default RegisterEngineer;
+const mapStateToProps = state =>{
+  return {
+    registerEngineer: state.registerEngineer
+  }
+}
+
+export default connect(mapStateToProps)(RegisterEngineer);

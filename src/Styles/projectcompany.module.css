@@ -1,0 +1,32 @@
+.projectbox{
+    display: grid;
+    grid-template-columns: 700px;
+    grid-template-rows: 70px 90px auto;
+    grid-template-areas: "header" "field" "list";
+    border-radius: 18px;
+    background: white;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.header{
+    grid-area: header;
+}
+
+.list{
+    grid-area: list;
+}
+
+.table{
+    min-width: 100px;
+}
+.textfield{
+    width: 20%;
+}
+
+.button{
+    margin-top: inherit;
+}

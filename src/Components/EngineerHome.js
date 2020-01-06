@@ -33,6 +33,8 @@ import stylesskill from '../Styles/skill.module.css'
 import jwtdecode from "jwt-decode";
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import Swal from 'sweetalert2';
+import {getEngineerProfile, getSkillEngineer, updateEngineerProfile, addSkillEngineer, deleteSkillEngineer} from "../Redux/Actions/engineeruser";
+import {connect} from "react-redux";
 
 class EngineerHome extends Component {
   constructor(props) {
@@ -55,7 +57,7 @@ class EngineerHome extends Component {
   }
 
   decode = () => {
-    if (this.state.token == '' || this.token) {
+    if (this.state.token == '' || !this.state.token) {
       this
         .props
         .history
@@ -79,92 +81,88 @@ class EngineerHome extends Component {
       .push('/login');
   }
 
-  handleProfile = (e) => {
-    Axios
-      .get('http://localhost:8000/engineeruser/', {
-      headers: {
-        'Authorization': 'Bearer '.concat(this.state.token)
-      }
-    })
-      .then(({data}) => {
-        if (data.msg === 'error') {
-          this
-            .props
-            .history
-            .push('/login');
-        } else if (data.message == "jwt expired") {
-          this
-            .props
-            .history
-            .push('/login');
-        } else {
-          let original_date = data.data[0].date_of_birth
-          let day = parseInt(original_date.substr(8, 2)) + 1;
-          let month = original_date.substr(5, 2);
-          let year = original_date.substr(0, 4);
+  handleProfile = async() => {
+    let headers = {
+      'Authorization': 'Bearer '.concat(this.state.token)
+    }
+    await this
+      .props
+      .dispatch(getEngineerProfile(headers));
+    const engineerUser = await this.props.engineerUser;
 
-          day = ('0'+ day).slice(-2);
+    if (!engineerUser && engineerUser.engineerUserData.data.msg === 'error') {
+      this
+        .props
+        .history
+        .push('/login');
+    } else if (!engineerUser && engineerUser.engineerUserData.data.message == "jwt expired") {
+      this
+        .props
+        .history
+        .push('/login');
+    } else {
+      let original_date = engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0].date_of_birth: '';
+      let day = parseInt(original_date.substr(8, 2)) + 1;
+      let month = original_date.substr(5, 2);
+      let year = original_date.substr(0, 4);
 
-          this.setState({
-            user: data.data[0],
-            name: data.data[0].name,
-            description: data.data[0].description,
-            location: data.data[0].location,
-            date_of_birth: year + '-' + month + '-' + day,
-            username: data.data[0].username
-          })
-        }
+      day = ('0' + day).slice(-2);
+
+      this.setState({
+        user: engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0] : '',
+        name: engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0].name: '',
+        description: engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0].description:'',
+        location: engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0].location : '',
+        date_of_birth: year + '-' + month + '-' + day,
+        username: engineerUser.engineerUserData.data ? engineerUser.engineerUserData.data[0].username : ''
       })
-      .catch((err) => {
-        console.log(err)
-      })
+    }
   }
 
-  handleSkill = () => {
-    Axios
-      .get('http://localhost:8000/engineeruser/skill/', {
-      headers: {
-        "Authorization": "Bearer ".concat(this.state.token)
-      }
-    })
-      .then(({data}) => {
-        if (data.msg === 'error') {
-          this
-            .props
-            .history
-            .push('/login');
-        } else if (data.message == "jwt expired") {
-          this
-            .props
-            .history
-            .push('/login');
-        } else {
-          this.setState({skill: data.data})
-        }
-      })
-      .catch(err => console.log(err));
+  handleSkill = async() => {
+    let headers = {
+      'Authorization': 'Bearer '.concat(this.state.token)
+    }
+    await this
+      .props
+      .dispatch(getSkillEngineer(headers));
+    const engineerSkill = await this.props.engineerSkill;
+
+    if (engineerSkill.engineerSkillData.msg === 'error') {
+      this
+        .props
+        .history
+        .push('/login');
+    } else if (engineerSkill.engineerSkillData.message == "jwt expired") {
+      this
+        .props
+        .history
+        .push('/login');
+    } else {
+      this.setState({skill: engineerSkill.engineerSkillData.data})
+    }
   }
 
   onReset = () => {
-    const {user} = this.state;
+    const {engineerUser} = this.props
 
-    let original_date = user.date_of_birth
+    let original_date = engineerUser.engineerUserData.data[0].date_of_birth
     let day = parseInt(original_date.substr(8, 2)) + 1;
     let month = original_date.substr(5, 2);
     let year = original_date.substr(0, 4);
 
-    day = ('0'+ day).slice(-2);
+    day = ('0' + day).slice(-2);
 
     this.setState({
-      name: user.name,
-      description: user.description,
-      location: user.location,
+      name: engineerUser.engineerUserData.data[0].name,
+      description: engineerUser.engineerUserData.data[0].description,
+      location: engineerUser.engineerUserData.data[0].location,
       date_of_birth: year + '-' + month + '-' + day,
-      username: user.username
+      username: engineerUser.engineerUserData.data[0].username
     })
   }
 
-  handleUpdate = () => {
+  handleUpdate = async() => {
     let headers = {
       'Authorization': 'Bearer '.concat(this.state.token)
     }
@@ -176,52 +174,57 @@ class EngineerHome extends Component {
       date_of_birth: this.state.date_of_birth
     }
 
-    Axios
-      .patch('http://localhost:8000/engineeruser/', null, {
-      headers: headers,
-      params: data
-    })
-      .then((response) => {
-        Swal.fire({title: "Success", text: "Data updated successfully", icon: "success", timer: 1000, showConfirmButton: false});
-        this.handleProfile();
-      })
-      .catch(err => console.log(err));
+    await this
+      .props
+      .dispatch(updateEngineerProfile(headers, data));
+    const engineerUpdate = await this.props.engineerUpdate;
+
+    if (engineerUpdate.engineerUpdateData.msg == "success") {
+      Swal.fire({title: "Success", text: "Data updated successfully", icon: "success", timer: 1000, showConfirmButton: false});
+      this.handleProfile();
+    } else {
+      Swal.fire({title: "Failed", text: "Data failed to update", icon: "error", timer: 1000, showConfirmButton: false});
+    }
   }
 
-  addSkill = () => {
-    Axios.post('http://localhost:8000/engineeruser/skill', {
+  addSkill = async() => {
+    let data = {
       skill_name: this.state.skill_name,
       level: this.state.level
-    }, {
-      headers: {
-        'Authorization': 'Bearer '.concat(this.state.token)
-      }
-    }).then((response) => {
-      Swal.fire({title: "Success", text: "Data successfully added", icon: "success", timer: 1000, showConfirmButton: false});
-      this.setState({skill_name: '', level: ''});
+    }
+    let headers = {
+      'Authorization': 'Bearer '.concat(this.state.token)
+    }
+
+    await this.props.dispatch(addSkillEngineer(headers,data));
+    const engineerAddSkill = await this.props.engineerAddSkill;
+
+    if (engineerAddSkill.engineerSkillAddData.msg == "success") {
+      Swal.fire({title: "Success", text: "Data updated successfully", icon: "success", timer: 1000, showConfirmButton: false});
       this.handleSkill();
       this.handleProfile();
-    }).catch(err => console.log(err))
+      this.setState({skill_name: ''})
+    } else {
+      Swal.fire({title: "Failed", text: "Data failed to add", icon: "error", timer: 1000, showConfirmButton: false});
+    }
   }
 
-  deleteSkill = () => {
+  deleteSkill = async() => {
     let skill_id = this.state.skill_id
-    let URL = 'http://localhost:8000/engineeruser/skill/' + skill_id.id
-    console.log(URL);
+    let headers = {
+      'Authorization': 'Bearer '.concat(this.state.token)
+    }
 
-    Axios
-      .delete(URL, {
-      headers: {
-        'Authorization': 'Bearer '.concat(this.state.token)
-      }
-    })
-      .then((response) => {
-        console.log(response)
-        Swal.fire({title: "Success", text: "Data successfully deleted", icon: "success", timer: 1000, showConfirmButton: false});
-        this.handleSkill();
-        this.handleProfile();
-      })
-      .catch(err => console.log(err))
+    await this.props.dispatch(deleteSkillEngineer(skill_id.id, headers));
+    const engineerDeleteSkill = await this.props.engineerDeleteSkill;
+
+    if (engineerDeleteSkill.engineerSkillDeleteData.msg == "success") {
+      Swal.fire({title: "Success", text: "Data successfully deleted", icon: "success", timer: 1000, showConfirmButton: false});
+      this.handleSkill();
+      this.handleProfile();
+    } else {
+      Swal.fire({title: "Failed", text: "Data failed to delete", icon: "error", timer: 1000, showConfirmButton: false});
+    }
   }
 
   Skill = () => {
@@ -332,7 +335,6 @@ class EngineerHome extends Component {
   }
 
   Profile = () => {
-    console.log(this.state.date_of_birth);
     return (
       <div className={stylesprofile.profilebox}>
         <h1 className={stylesprofile.header}>Profile</h1>
@@ -597,4 +599,8 @@ class EngineerHome extends Component {
   }
 }
 
-export default EngineerHome;
+const mapStateToProps = state => {
+  return {engineerUser: state.engineerUser, engineerSkill: state.engineerSkill, engineerUpdate: state.engineerUpdate, engineerAddSkill: state.engineerAddSkill, engineerDeleteSkill: state.engineerDeleteSkill}
+}
+
+export default connect(mapStateToProps)(EngineerHome);

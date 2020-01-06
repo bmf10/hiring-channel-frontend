@@ -7,6 +7,8 @@ import Axios from 'axios';
 import Swal from 'sweetalert2';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import jwtdecode from "jwt-decode";
+import { RegisterCompanyAction } from "../Redux/Actions/auth";
+import {connect} from "react-redux";
 
 class RegisterCompany extends Component {
   constructor(props) {
@@ -23,35 +25,53 @@ class RegisterCompany extends Component {
     }
   }
 
-  handleRegister = e => {
+  handleRegister = async(e) => {
     e.preventDefault();
-    Axios
-      .post('http://localhost:8000/auth/company', {
+
+    let data = {
       company_name: this.state.company_name,
       logo: this.state.logo,
       location: this.state.location,
       description: this.state.description,
       username: this.state.username,
       password: this.state.password
-    })
-      .then(response => {
-        let msg = response.data.msg
+    }
 
-        if (msg === "error") {
-          Swal.fire({title: "Failed", text: response.data.errors, icon: "error", timer: 1000, showConfirmButton: false});
-        } else if (msg === "success") {
-          Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
-          setTimeout(function () {
-            this
-              .props
-              .history
-              .push('/login/')
-          }.bind(this), 1000);
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    await this
+        .props
+        .dispatch(RegisterCompanyAction(data));
+      const registerCompany = await this.props.registerCompany;
+      let msg = registerCompany.RegisterCompanyData.msg
+
+      if (msg === "error") {
+        Swal.fire({title: "Failed", text: registerCompany.RegisterCompanyData.errors, icon: "error", timer: 1000, showConfirmButton: false});
+      } else if (msg === "success") {
+        Swal.fire({title: "Success", text: "Redirecting... ", icon: "success", timer: 1000, showConfirmButton: false});
+        setTimeout(function () {
+          this
+            .props
+            .history
+            .push('/login/')
+        }.bind(this), 1000);
+      }
+
+    // Axios
+    //   .post('http://localhost:8000/auth/company', {
+    //   company_name: this.state.company_name,
+    //   logo: this.state.logo,
+    //   location: this.state.location,
+    //   description: this.state.description,
+    //   username: this.state.username,
+    //   password: this.state.password
+    // })
+    //   .then(response => {
+    //     let msg = response.data.msg
+
+        
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
   }
 
   redirectLogin = () => {
@@ -167,7 +187,7 @@ class RegisterCompany extends Component {
                     placeholder="input password..."
                     value={this.state.password}
                     validators={['required', 'minStringLength: 6', 'maxStringLength: 16']}
-                    errorMessages={['This field is required', 'Username minimum length 6 characters', 'Username minimum length 32 characters']}
+                    errorMessages={['This field is required', 'Password minimum length 6 characters', 'Password minimum length 32 characters']}
                     onChange={event => {
                     const {value} = event.target;
                     this.setState({password: value});
@@ -186,4 +206,10 @@ class RegisterCompany extends Component {
   }
 }
 
-export default RegisterCompany;
+const mapStateToProps = state =>{
+  return {
+    registerCompany: state.registerCompany
+  }
+}
+
+export default connect(mapStateToProps)(RegisterCompany);
