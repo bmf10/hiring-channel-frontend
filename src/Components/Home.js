@@ -575,7 +575,7 @@ class Home extends Component {
             } else if (msg == 'success') {
               this.handleEngineerRequest();
               this.handleEngineerProject();
-              Swal.fire({title: "Success", text: "Request received successfully", icon: "success", timer: 1000, showConfirmButton: false});
+              Swal.fire({title: "Success", text: "Request succeeded in reject", icon: "success", timer: 1000, showConfirmButton: false});
             }
           } else if (result.dismiss) {
             this.setState({request_is_accept: '', request_id_project: ''})
