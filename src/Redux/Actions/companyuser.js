@@ -3,14 +3,14 @@ import Axios from "axios";
 export const getCompanyProfile = (headers) => {
   return {
     type: "GET_COMPANY_PROFILE",
-    payload: Axios.get("http://localhost:8000/companyuser/", {headers: headers})
+    payload: Axios.get("http://54.158.124.83:8000/companyuser/", { headers: headers })
   };
 }
 
 export const updateCompanyProfile = (headers, data) => {
   return {
     type: "UPDATE_COMPANY_PROFILE",
-    payload: Axios.patch("http://localhost:8000/companyuser/", null, {
+    payload: Axios.patch("http://54.158.124.83:8000/companyuser/", null, {
       headers: headers,
       params: data
     })
@@ -20,42 +20,42 @@ export const updateCompanyProfile = (headers, data) => {
 export const getProjectCompany = (headers) => {
   return {
     type: "GET_PROJECT_COMPANY",
-    payload: Axios.get("http://localhost:8000/companyuser/project/", {headers: headers})
+    payload: Axios.get("http://54.158.124.83:8000/companyuser/project/", { headers: headers })
   }
 }
 
-export const addProjectCompany = (headers, data)=>{
+export const addProjectCompany = (headers, data) => {
   return {
     type: "ADD_PROJECT_COMPANY",
-    payload: Axios.post("http://localhost:8000/companyuser/project/", data, {headers: headers})
+    payload: Axios.post("http://54.158.124.83:8000/companyuser/project/", data, { headers: headers })
   };
 }
 
-export const deleteProjectCompany = (id, headers)=>{
-  return{
+export const deleteProjectCompany = (id, headers) => {
+  return {
     type: "DELETE_PROJECT_COMPANY",
-    payload: Axios.delete("http://localhost:8000/companyuser/project/"+ id, {headers: headers})
+    payload: Axios.delete("http://54.158.124.83:8000/companyuser/project/" + id, { headers: headers })
   }
 }
 
-export const getAvailableProject = (headers)=>{
+export const getAvailableProject = (headers) => {
   return {
     type: "GET_AVAILABLE_PROJECT",
-    payload: Axios.get("http://localhost:8000/companyuser/projectlist", {headers: headers})
+    payload: Axios.get("http://54.158.124.83:8000/companyuser/projectlist", { headers: headers })
   }
 }
 
-export const sendRequestData = (headers,data) =>{
+export const sendRequestData = (headers, data) => {
   return {
     type: "SEND_REQUEST",
-    payload: Axios.post("http://localhost:8000/companyuser/projectrequest",data, {headers: headers})
+    payload: Axios.post("http://54.158.124.83:8000/companyuser/projectrequest", data, { headers: headers })
   }
 }
 
-export const finishProjectData = (headers, params)=>{
+export const finishProjectData = (headers, params) => {
   return {
     type: "FINISH_PROJECT",
-    payload: Axios.patch("http://localhost:8000/companyuser/projectfinish",null, {
+    payload: Axios.patch("http://54.158.124.83:8000/companyuser/projectfinish", null, {
       headers: headers, params: params
     })
   }
