@@ -1,13 +1,18 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Hiring App
+Hiring Channel is a JavaScript language website built with NodeJS
 
-## Available Scripts
+## Features
+* **App Feature**
+    * Search Engineer
+    * Add and Deliver projects (For Company)
+    * Accept and Reject projects (For Engineer)
 
-In the project directory, you can run:
+## Technologies
+* **Project Created With**
+    * Node JS : https://nodejs.org/en/docs/
+    * ReactJS: https://reactjs.org/
+    
+## Tools
+* **Project Created With**
+   * Visual Code : https://code.visualstudio.com/
 
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
